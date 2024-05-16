@@ -1,65 +1,47 @@
-from summit.utils.dataset import DataSet
-from summit.domain import *
-from summit.experiment import Experiment
-from summit import get_summit_config_path
-from summit.utils import jsonify_dict, unjsonify_dict
-
-import torch
-import torch.nn.functional as F
-from skorch import NeuralNetRegressor
-from skorch.utils import to_device
-
-from sklearn.compose import ColumnTransformer, TransformedTargetRegressor
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, OneHotEncoder, FunctionTransformer
-from sklearn.model_selection import (
-    train_test_split,
-    cross_validate,
-    GridSearchCV,
-    ParameterGrid,
-)
-from sklearn.model_selection._search import BaseSearchCV
-from sklearn.base import (
-    BaseEstimator,
-    RegressorMixin,
-    is_classifier,
-    clone,
-    TransformerMixin,
-)
-from sklearn.model_selection._split import check_cv
-from sklearn.model_selection._validation import (
-    _fit_and_score,
-    _score,
-    _aggregate_score_dicts,
-)
-from sklearn.metrics import r2_score
-from sklearn.utils.validation import (
-    _deprecate_positional_args,
-    indexable,
-    check_is_fitted,
-    _check_fit_params,
-)
-from sklearn.utils import check_array, _safe_indexing
-from sklearn.utils.fixes import delayed
-from sklearn.metrics._scorer import _check_multimetric_scoring
-
-from scipy.sparse import issparse
-
-from tqdm.auto import tqdm
-from joblib import Parallel
-import pathlib
-import numpy as np
-from numpy.random import default_rng
-import pandas as pd
-from copy import deepcopy
-from itertools import product
-from collections import defaultdict
-from copy import deepcopy
-import pkg_resources
-import time
 import json
+import pathlib
+import time
 import types
 import warnings
+from collections import defaultdict
+from copy import deepcopy
+from itertools import product
+
+import numpy as np
+import pandas as pd
+import pkg_resources
+import torch
+import torch.nn.functional as F
+from joblib import Parallel
+from numpy.random import default_rng
+from scipy.sparse import issparse
+from sklearn.base import (BaseEstimator, RegressorMixin, TransformerMixin,
+                          clone, is_classifier)
+from sklearn.compose import ColumnTransformer, TransformedTargetRegressor
+from sklearn.metrics import r2_score
+from sklearn.metrics._scorer import _check_multimetric_scoring
+from sklearn.model_selection import (GridSearchCV, ParameterGrid,
+                                     cross_validate, train_test_split)
+from sklearn.model_selection._search import BaseSearchCV
+from sklearn.model_selection._split import check_cv
+from sklearn.model_selection._validation import (_aggregate_score_dicts,
+                                                 _fit_and_score, _score)
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import (FunctionTransformer, OneHotEncoder,
+                                   StandardScaler)
+from sklearn.utils import _safe_indexing, check_array
+from sklearn.utils.fixes import delayed
+from sklearn.utils.validation import (_deprecate_positional_args,
+                                      check_is_fitted, indexable)
+from skorch import NeuralNetRegressor
+from skorch.utils import to_device
+from tqdm.auto import tqdm
+
+from summit import get_summit_config_path
+from summit.domain import *
+from summit.experiment import Experiment
+from summit.utils import jsonify_dict, unjsonify_dict
+from summit.utils.dataset import DataSet
 
 __all__ = [
     "ExperimentalEmulator",
@@ -849,8 +831,8 @@ def make_parity_plot(
     test_color="#3c328c",
     title=None,
 ):
-    import matplotlib.pyplot as plt
     import matplotlib.patches as mpatches
+    import matplotlib.pyplot as plt
 
     if ax is None:
         fig, ax = plt.subplots(1)
@@ -1158,7 +1140,6 @@ class ProgressGridSearchCV(BaseSearchCV):
             refit_metric = self.refit
 
         X, y, groups = indexable(X, y, groups)
-        fit_params = _check_fit_params(X, fit_params)
 
         cv_orig = check_cv(self.cv, y, classifier=is_classifier(estimator))
         n_splits = cv_orig.get_n_splits(X, y, groups)
