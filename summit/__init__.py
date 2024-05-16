@@ -14,20 +14,20 @@ def clean_house(config_dir_name=".summit"):
     shutil.rmtree(config_path)
 
 
+from summit.benchmarks import *
 from summit.domain import *
 from summit.experiment import *
 from summit.run import *
-from summit.strategies import *
-from summit.benchmarks import *
 from summit.utils.dataset import DataSet
-from summit.utils.multiobjective import pareto_efficient, hypervolume
+from summit.utils.multiobjective import hypervolume, pareto_efficient
 
 
 def run_tests():
     """Run tests using pytest"""
+    import sys
+
     import pytest
     from pytest import ExitCode
-    import sys
 
     retcode = pytest.main(
         ["--doctest-modules", "--disable-warnings", "--pyargs", "summit"]

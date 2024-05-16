@@ -46,7 +46,6 @@ pymoo = "^0.6.0"
 SQSnobFit = "^0.4.3"
 
 # Dependencies for MTBO
-botorch = "^0.8.0"
 
 # Tests
 pytest = "^6.2.5"
