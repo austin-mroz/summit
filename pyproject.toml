@@ -32,15 +32,9 @@ numba = "^0.55.0"
 fastprogress = "^0.2.3"
 matplotlib = "^3.2.2"
 scikit-learn = "^1.0"
-torch = "^1.11.0"
+torch = ">=1.11.0"
 skorch = "^0.11.0"
 cython = "^0.29.21"
-
-# Dependencies for TSEMO and SOBO
-GPy = "^1.9"
-gpyopt = "^1.2.6"
-pyrff = "^2.0.1"
-pymoo = "^0.6.0"
 
 # Dependencies for Snobfit
 SQSnobFit = "^0.4.3"
