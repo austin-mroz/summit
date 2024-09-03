@@ -30,7 +30,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import (FunctionTransformer, OneHotEncoder,
                                    StandardScaler)
 from sklearn.utils import _safe_indexing, check_array
-from sklearn.utils.fixes import delayed
+from sklearn.utils.parallel import delayed
 from sklearn.utils.validation import (_deprecate_positional_args,
                                       check_is_fitted, indexable)
 from skorch import NeuralNetRegressor
